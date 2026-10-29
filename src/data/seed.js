@@ -721,3 +721,5 @@ export const SOURCES = [
 // Ofertas añadidas el 29-10-2026 a partir de la revisión de StudentOffers.co (ver studentoffers-picks.js).
 import {STUDENTOFFERS_PICKS} from './studentoffers-picks.js';
 OFFERS.push(...STUDENTOFFERS_PICKS.filter(p => !OFFERS.some(o => o.slug === p.slug)));
+import {REGIONAL_PICKS} from './regional-picks.js';
+OFFERS.push(...REGIONAL_PICKS.filter(p => !OFFERS.some(o => o.slug === p.slug)));
