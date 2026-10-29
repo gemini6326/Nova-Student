@@ -607,3 +607,47 @@ html.pre-dark .oc-benefit.t-free,html.pre-dark .oc-benefit.t-credits,html.pre-da
 @media (prefers-reduced-motion:reduce){.offer-card,.offer-card:hover{transition:none;transform:none}}
 .oc-place{flex:none}
 .oc-date{min-width:0;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== Paleta profesional (oct 2026): índigo + esmeralda sobre pizarra ===== */
+:root{
+  --bg:#F6F7FB; --bg-2:#EEF1F6; --card:#FFFFFF; --card-2:#F8FAFC; --card-3:#F1F4F9;
+  --ink:#0F172A; --ink-2:#334155; --muted:#64748B; --faint:#94A3B8;
+  --line:rgba(15,23,42,.08); --line-2:rgba(15,23,42,.14);
+  --ember:#4F46E5; --ember-2:#6366F1; --ember-ink:#FFFFFF; --ember-soft:rgba(79,70,229,.09);
+  --phos:#059669; --phos-2:#10B981; --phos-soft:rgba(5,150,105,.10);
+  --good:#047857; --good-soft:rgba(4,120,87,.10); --warn:#B45309; --warn-soft:rgba(180,83,9,.10); --bad:#B91C1C; --bad-soft:rgba(185,28,28,.08);
+  --glow-1:rgba(79,70,229,.07); --glow-2:rgba(16,185,129,.05); --grid:rgba(15,23,42,.035);
+  --scope-ring:rgba(79,70,229,.16); --sweep:rgba(79,70,229,.22);
+  --shadow-2:0 1px 2px rgba(15,23,42,.04),0 10px 28px -12px rgba(15,23,42,.14);
+  --f-display:"Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+body.dark,html.pre-dark body{
+  --bg:#0A0D14; --bg-2:#0D111A; --card:#111622; --card-2:#151B29; --card-3:#1B2233;
+  --ink:#F1F5F9; --ink-2:#CBD5E1; --muted:#94A3B8; --faint:#64748B;
+  --line:rgba(148,163,184,.10); --line-2:rgba(148,163,184,.18);
+  --ember:#818CF8; --ember-2:#A5B4FC; --ember-ink:#0B1020; --ember-soft:rgba(129,140,248,.13);
+  --phos:#34D399; --phos-2:#6EE7B7; --phos-soft:rgba(52,211,153,.11);
+  --good:#34D399; --good-soft:rgba(52,211,153,.11); --warn:#FBBF24; --warn-soft:rgba(251,191,36,.10); --bad:#F87171; --bad-soft:rgba(248,113,113,.10);
+  --glow-1:rgba(99,102,241,.14); --glow-2:rgba(52,211,153,.06); --grid:rgba(148,163,184,.045);
+  --scope-bg:#0B0F18; --scope-ring:rgba(129,140,248,.16); --sweep:rgba(129,140,248,.24);
+}
+h1,h2,h3{letter-spacing:-.025em}
+body{font-size:15px;line-height:1.6}
+.offer-card{border-radius:18px;box-shadow:var(--shadow-1)}
+.offer-card h3{font-family:var(--f-display);font-weight:700}
+.oc-tag.hot{background:var(--ember-soft);color:var(--ember);border-color:transparent}
+.badge-credits{background:rgba(124,58,237,.10);color:#7C3AED}
+.badge-bundle{background:var(--ember-soft);color:var(--ember)}
+/* Botones sólidos y sobrios; los enlaces de texto usan un índigo más claro en modo oscuro */
+body.dark,html.pre-dark body{--ember:#6366F1;--ember-2:#7C83F6;--ember-ink:#FFFFFF;--link:#A5B4FC}
+:root{--link:#4F46E5}
+.btn-primary{background:var(--ember);box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 8px 20px -10px var(--ember)}
+.btn-primary:hover{background:var(--ember-2)}
+.oc-more{color:var(--link)}
+.oc-benefit{font-weight:500;font-size:15px}
+.oc-benefit.t-free,.oc-benefit.t-credits,.oc-benefit.t-discount,.oc-benefit.t-bundle,.oc-benefit.t-other{color:var(--ink);background:var(--card-2);border-color:var(--line);border-left-color:var(--acc)}
+.offer-card{background:var(--card)}
+.source-cta,.nova-ai-fab{background:var(--ember);color:var(--ember-ink);box-shadow:0 10px 24px -12px var(--ember)}
+.source-cta:hover,.nova-ai-fab:hover{background:var(--ember-2)}
+.offer-detail-header{background:linear-gradient(180deg,var(--ember-soft),transparent 85%)}
