@@ -12,6 +12,9 @@ test('browser: search, open offer, persist an alert and browse the server catalo
   const root=fileURLToPath(new URL('../../',import.meta.url));const dir=mkdtempSync(path.join(tmpdir(),'nova-e2e-'));
   const state=JSON.parse(readFileSync(path.join(root,'test/fixtures/legacy-state.json'),'utf8'));
   state.alerts=[];state.offers.forEach(offer=>offer.verified_at=new Date().toISOString());
+  // Keep the fixture catalog in focus: curated picks exist but stay unpublished here.
+  const {STUDENTOFFERS_PICKS}=await import(new URL('../../src/data/studentoffers-picks.js',import.meta.url));
+  STUDENTOFFERS_PICKS.forEach((p,i)=>state.offers.push({...p,id:5000+i,status:'pending'}));
   const database=path.join(dir,'test.json');writeFileSync(database,JSON.stringify(state));
   const listener=createServer();await new Promise(resolve=>listener.listen(0,'127.0.0.1',resolve));const port=listener.address().port;await new Promise(resolve=>listener.close(resolve));
   const child=spawn(process.execPath,['server.js'],{cwd:root,env:{...process.env,PORT:String(port),DATABASE_PATH:database,SUPABASE_URL:'',SUPABASE_SECRET_KEY:'',SEED_DATABASE_PATH:'',WORKER_ENABLED:'false',GROQ_API_KEY:'',BRAVE_SEARCH_API_KEY:'',RESEND_API_KEY:'',SMTP_USER:'',SMTP_PASS:'',ADMIN_TOKEN:''},stdio:['ignore','pipe','pipe']});
@@ -24,7 +27,7 @@ test('browser: search, open offer, persist an alert and browse the server catalo
     browser=await chromium.launch();const context=await browser.newContext();
     await context.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());
     const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(base);
-    await page.locator('#nav-discover').click();await page.locator('#q').fill('Educación cloud');await page.locator('#searchBtn').click();
+    await page.locator('#nav-discover').click();await page.locator('#q').fill('cloud');await page.locator('#searchBtn').click();
     await page.locator('#grid .card').first().waitFor();assert.match(await page.locator('#grid').innerText(),/Educación cloud/);
     await page.locator('#grid .card').first().click();await page.locator('#modalTitle').waitFor();assert.match(await page.locator('#modalTitle').innerText(),/Educación cloud/);
     // The premium panel covers the backdrop's center; close with the visible button.
@@ -34,7 +37,7 @@ test('browser: search, open offer, persist an alert and browse the server catalo
     await page.waitForFunction(()=>/guardada|creada|activada/i.test(document.querySelector('#alertStatus')?.textContent||''));
     await page.goto(base+'/catalogo/');
     await page.waitForFunction(()=>document.querySelectorAll('#country option').length===250);
-    await page.fill('#busqueda','Educación cloud');
+    await page.fill('#busqueda','cloud');
     await page.locator('[data-offer]:visible h2 a').first().click();
     await page.locator('h1').waitFor();assert.match(await page.locator('h1').textContent(),/Educación cloud/);
     assert.equal(errors.length,0);
