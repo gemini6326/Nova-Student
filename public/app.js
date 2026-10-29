@@ -41,7 +41,7 @@ const ISO_CODES = [
 ];
 
 const regionNames=new Intl.DisplayNames(['es'],{type:'region'});
-const regionLabel=code=>code==='GLOBAL'?'Global':ISO_CODES.includes(code)?regionNames.of(code):'Países por confirmar';
+const regionLabel=code=>code==='GLOBAL'?'Global':ISO_CODES.includes(code)?regionNames.of(code):'Varios países';
 
 /* ============================================
    ESTADO
@@ -196,6 +196,8 @@ function cardDescription(o) {
 }
 const SHORT_CAT = {Development:'Desarrollo',Cloud:'Cloud',Design:'Diseño',Creative:'Creativo',Productivity:'Productividad',AI:'IA',Entertainment:'Entretenimiento',Education:'Educación',Finance:'Finanzas',Hardware:'Hardware',Security:'Seguridad',Hosting:'Hosting',Streaming:'Streaming',Shopping:'Compras',Travel:'Viajes',Health:'Salud',Gaming:'Gaming'};
 const placesLabel = o => { const places = (o.countries || []).map(regionLabel); return places.length > 2 ? places.slice(0, 2).join(', ') + ' +' + (places.length - 2) : places.join(', ') || 'Países por confirmar'; };
+// Short card labels; the full label stays in the tooltip and in the offer detail.
+const SHORT_CHECK = {verified: 'Comprobada', unconfirmed: 'Revisada', needs_review: 'En revisión'};
 const PIN = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
 const OUT = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
 
@@ -228,7 +230,7 @@ function renderCard(o) {
       <div class="oc-foot">
         <span class="oc-place" title="${esc((o.countries || []).map(regionLabel).join(', '))}">${PIN}${esc(placesLabel(o))}</span>
         ${foreign ? '<span class="oc-warn" title="Comprueba si puedes reclamarla desde tu país">Otro país</span>' : ''}
-        <span class="oc-date">${stamp ? `${esc(verificationInfo(o).label)} <time datetime="${esc(stamp.toISOString())}">${esc(stamp.toLocaleDateString('es', { day: 'numeric', month: 'short' }))}</time>` : ''}</span>
+        <span class="oc-date" title="${esc(verificationInfo(o).label)}">${stamp ? `${esc(SHORT_CHECK[verificationInfo(o).state] || 'Revisada')} <time datetime="${esc(stamp.toISOString())}">${esc(stamp.toLocaleDateString('es', { day: 'numeric', month: 'short' }))}</time>` : ''}</span>
         <button class="cmp-btn" type="button" data-compare="${o.id}" aria-pressed="false" aria-label="Comparar ${esc(o.brand || o.title)}" title="Comparar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M12 2v20"/></svg></button>
         <button class="oc-more" type="button" data-details="${o.id}">Detalles</button>
       </div>
