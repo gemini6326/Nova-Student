@@ -224,7 +224,7 @@ function renderCard(o) {
       </div>
       <p class="oc-benefit t-${esc(o.offer_type || 'other')}"><span>${esc(benefit)}</span></p>
       ${desc ? `<p class="oc-desc">${esc(desc)}</p>` : ''}
-      <a class="oc-cta" href="${esc(safeUrl(o.source_url))}" target="_blank" rel="noopener noreferrer" data-claim="${o.id}">Obtener beneficio ${OUT}</a>
+      <a class="oc-cta" href="${esc(safeUrl(o.source_url))}" target="_blank" rel="noopener noreferrer" data-claim="${o.id}">Reclamar en la web oficial ${OUT}</a>
       <div class="oc-foot">
         <span class="oc-place" title="${esc((o.countries || []).map(regionLabel).join(', '))}">${PIN}${esc(placesLabel(o))}</span>
         ${foreign ? '<span class="oc-warn" title="Comprueba si puedes reclamarla desde tu país">Otro país</span>' : ''}
@@ -484,7 +484,9 @@ async function openOffer(id) {
           <div class="offer-section">
             <h3>Qué obtienes</h3>
             <div class="benefit-highlight">${esc(o.benefit)}</div>
+            <p class="od-note">Las condiciones las fija el proveedor: confirma duración, renovación y si pide método de pago en la fuente oficial.</p>
           </div>
+          ${playbookSection(o)}
           ${o.requirements?.length ? `
           <div class="offer-section">
             <h3>Requisitos</h3>
@@ -495,7 +497,6 @@ async function openOffer(id) {
             <h3>Cómo obtenerla</h3>
             <ol class="steps-list">${o.steps.map(st => `<li>${esc(st)}</li>`).join('')}</ol>
           </div>` : ''}
-          ${playbookSection(o)}
           <div class="offer-section"><h3>Acceso desde otros países</h3><p>Comprueba residencia, matrícula y método de verificación en los requisitos y la fuente. Una VPN no sustituye esos requisitos; utiliza solo métodos expresamente permitidos por el proveedor.</p></div>
           ${o.liveness_verified_at && evidence ? `<div class="offer-section" id="offerEvidence"><h3>Evidencia de la última verificación</h3><blockquote>${esc(evidence)}</blockquote></div>` : ''}
         </div>

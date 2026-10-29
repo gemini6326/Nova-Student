@@ -585,3 +585,25 @@ body.dark .oc-benefit.t-bundle,body.dark .oc-benefit.t-other,html.pre-dark .oc-b
 .pb-combo{min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid var(--line-2);background:var(--card);color:var(--ink);font:600 13.5px var(--f-body);cursor:pointer;transition:border-color .15s,transform .15s}
 .pb-combo:hover,.pb-combo:focus-visible{border-color:var(--phos);transform:translateY(-1px)}
 @media (max-width:560px){.pb-stats{grid-template-columns:1fr}.pb-stat{grid-template-columns:auto 1fr;align-items:center;gap:10px}}
+
+/* ===== Capa premium (oct 2026) ===== */
+.offer-card{position:relative;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.offer-card:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 18px 40px -24px rgba(0,0,0,.55)}
+.offer-card:focus-visible{outline:2px solid var(--phos);outline-offset:3px}
+.oc-benefit{--acc:var(--phos);background:var(--card-2);border:1px solid var(--line);border-left:3px solid var(--acc);color:var(--ink);font-weight:600;font-size:15.5px}
+.oc-benefit.t-free{--acc:var(--good)}
+.oc-benefit.t-discount{--acc:var(--ember)}
+.oc-benefit.t-credits{--acc:#8B5CF6}
+.oc-benefit.t-bundle,.oc-benefit.t-other{--acc:var(--phos)}
+body.dark .oc-benefit.t-free,body.dark .oc-benefit.t-credits,body.dark .oc-benefit.t-discount,body.dark .oc-benefit.t-bundle,body.dark .oc-benefit.t-other,
+html.pre-dark .oc-benefit.t-free,html.pre-dark .oc-benefit.t-credits,html.pre-dark .oc-benefit.t-discount,html.pre-dark .oc-benefit.t-bundle,html.pre-dark .oc-benefit.t-other{color:var(--ink);background:var(--card-2)}
+.oc-cta{height:46px;background:transparent;color:var(--ink);border:1px solid var(--line-2);box-shadow:none;font-size:15px}
+.oc-cta:hover,.oc-cta:focus-visible{background:var(--ember);border-color:var(--ember);color:var(--ember-ink)}
+.oc-date{color:var(--phos);font-weight:600}
+.oc-date:not(:empty)::before{content:"✓ ";}
+.oc-more{min-height:36px}
+.save-btn,.cmp-btn{min-width:36px;min-height:36px}
+.od-note{margin:0;font-size:13.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.offer-card,.offer-card:hover{transition:none;transform:none}}
+.oc-place{flex:none}
+.oc-date{min-width:0;overflow:hidden;text-overflow:ellipsis}
