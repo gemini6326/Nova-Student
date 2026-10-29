@@ -4,6 +4,7 @@
 
 export const VALUES = {
   // Precio oficial de lista × duración de la oferta (páginas de precios leídas el 29-10-2026).
+  'google-ai-pro-estudiantes': {usd: 240, label: '≈ USD 240 al año', src: 'https://gemini.google/us/students/'},
   'sentry-estudiantes': {usd: 312, label: '≈ USD 312 al año', src: 'https://sentry.io/pricing/'},
   'frontend-masters-estudiantes': {usd: 195, label: '≈ USD 195 (6 meses)', src: 'https://frontendmasters.com/join/'},
   'figma-education': {usd: 192, label: '≈ USD 192 al año', src: 'https://www.figma.com/pricing/'},
@@ -23,7 +24,6 @@ export const VALUES = {
   'dbeaver-estudiantes': {usd: 255, label: 'USD 255 al año'},
   'termius-estudiantes': {usd: 240, label: 'USD 240 al año'},
   'clerk-estudiantes': {usd: 240, label: 'USD 240 al año'},
-  'v0-estudiantes': {usd: 240, label: 'USD 20 al mes × 12'},
   'ibm-cloud-estudiantes': {usd: 200, label: 'USD 200 en créditos'},
   'linear-estudiantes': {usd: 192, label: 'hasta USD 192'},
   'boot-dev-estudiantes': {usd: 177, label: 'USD 177'},
@@ -49,7 +49,7 @@ export const VALUES = {
 export const GEMS = [
   {slug: 'new-relic-estudiantes', why: 'Observabilidad que las empresas pagan cada mes, gratis mientras estudies.'},
   {slug: 'altium-designer-estudiantes', why: 'Diseño de circuitos de nivel industrial, gratis un año.'},
-  {slug: 'google-ai-pro-estudiantes', why: 'Un año del plan de IA de Google sin pagar.'},
+  {slug: 'google-ai-pro-estudiantes', why: 'Un año del plan de IA de Google sin pagar (USD 240 de valor).'},
   {slug: 'cloudflare-estudiantes', why: 'Despliega apps en la red de Cloudflare con el plan de pago, gratis.'},
   {slug: 'sentry-estudiantes', why: 'El monitor de errores que usan los equipos profesionales, renovable.'},
   {slug: 'frontend-masters-estudiantes', why: 'Seis meses de los cursos de frontend más respetados.'},
@@ -60,7 +60,7 @@ export const GEMS = [
   {slug: 'appwrite-estudiantes', why: 'Backend completo en plan Pro hasta que te gradúes.'},
   {slug: 'granola-estudiantes', why: 'Notas de reuniones con IA en plan Business por un año.'},
   {slug: 'ansys-estudiantes', why: 'Simulación de ingeniería profesional, gratis para estudiantes.'},
-  {slug: 'v0-estudiantes', why: 'Créditos mensuales para crear interfaces con IA durante un año.'},
+  {slug: 'v0-estudiantes', why: 'Un año de v0 gratis si tu universidad está en la lista.'},
 ];
 
 export const valueOf = (offer) => VALUES[offer?.slug] || null;
