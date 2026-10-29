@@ -1,8 +1,19 @@
 // Valor en dinero de las ofertas y "Joyas ocultas".
 // Solo se usan cifras que la propia ficha (y su fuente oficial) declara; nada se estima a ojo.
-// usd = valor total del beneficio tal como lo describe la oferta.
+// usd = valor total del beneficio tal como lo describe la oferta, o precio oficial de lista × duración (con src).
 
 export const VALUES = {
+  // Precio oficial de lista × duración de la oferta (páginas de precios leídas el 29-10-2026).
+  'sentry-estudiantes': {usd: 312, label: '≈ USD 312 al año', src: 'https://sentry.io/pricing/'},
+  'frontend-masters-estudiantes': {usd: 195, label: '≈ USD 195 (6 meses)', src: 'https://frontendmasters.com/join/'},
+  'figma-education': {usd: 192, label: '≈ USD 192 al año', src: 'https://www.figma.com/pricing/'},
+  'miro-estudiantes': {usd: 192, label: '≈ USD 192 (2 años)', src: 'https://miro.com/pricing/'},
+  'asana-estudiantes': {usd: 132, label: '≈ USD 132 al año', src: 'https://asana.com/pricing'},
+  'github-copilot-free': {usd: 120, label: '≈ USD 120 al año', src: 'https://github.com/features/copilot/plans'},
+  'notion-student-free': {usd: 120, label: '≈ USD 120 al año', src: 'https://www.notion.com/pricing'},
+  'zed-estudiantes': {usd: 120, label: '≈ USD 120 al año', src: 'https://zed.dev/pricing'},
+  'lucid-software-estudiantes': {usd: 108, label: '≈ USD 108 al año', src: 'https://lucid.co/pricing'},
+  'cloudflare-estudiantes': {usd: 60, label: '≈ USD 60 al año', src: 'https://developers.cloudflare.com/workers/platform/pricing/'},
   'new-relic-estudiantes': {usd: 3600, label: '≈ USD 300 al mes'},
   'altium-designer-estudiantes': {usd: 1990, label: 'hasta USD 1990'},
   'aws-builder-center-estudiantes': {usd: 579, label: 'hasta USD 579'},
@@ -53,7 +64,7 @@ export const GEMS = [
 ];
 
 export const valueOf = (offer) => VALUES[offer?.slug] || null;
-export const usd = (n) => 'USD ' + Math.round(n).toLocaleString('es');
+export const usd = (n) => 'USD ' + Math.round(n).toLocaleString('es-CO');
 export function totalValue(offers) {
   return (offers || []).reduce((sum, o) => sum + (VALUES[o.slug]?.usd || 0), 0);
 }

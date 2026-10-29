@@ -248,7 +248,7 @@ function renderCard(o) {
             ${top ? `<span class="oc-tag hot hl-${esc(top.key)}" title="${esc(top.reason)}">${esc(top.label)}</span>` : ''}
             <span class="oc-tag">${esc(SHORT_CAT[o.category] || catLabel(o.category))}</span>
             <span class="oc-tag t-${esc(o.offer_type || 'other')}">${badgeLabel(o.offer_type)}</span>
-            ${valueOf(o) ? `<span class="oc-tag oc-value" title="Valor declarado por la oferta">${esc(valueOf(o).label)}</span>` : ''}
+            ${valueOf(o) ? `<span class="oc-tag oc-value" title="${valueOf(o).src ? 'Según el precio oficial de lista' : 'Valor declarado por la oferta'}">${esc(valueOf(o).label)}</span>` : ''}
           </div>
         </div>
         <button class="save-btn ${isSaved ? 'saved' : ''}" data-save="${o.id}" aria-label="${isSaved ? 'Quitar de guardadas' : 'Guardar oferta'}" title="${isSaved ? 'Quitar de guardadas' : 'Guardar'}">${isSaved ? '♥' : '♡'}</button>
