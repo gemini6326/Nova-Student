@@ -13,6 +13,9 @@ test('HTTP API boots from normalized RPCs, preserves public gating and saves ale
     const {STUDENTOFFERS_PICKS}=await import('./src/data/studentoffers-picks.js');
     const {REGIONAL_PICKS}=await import('./src/data/regional-picks.js');
     const {AI_NEW}=await import('./src/data/ai-updates.js');
+    // Fixture rows already carry the current curated revision, so boot has no corrections to write.
+    const {OFFERS}=await import('./src/data/seed.js');
+    for(const row of fixture.offers){const c=OFFERS.find(o=>o.slug===row.slug);if(c?.catalog_revision)row.catalog_revision=c.catalog_revision;}
     [...STUDENTOFFERS_PICKS,...REGIONAL_PICKS,...AI_NEW].forEach((p,i)=>fixture.offers.push({...p,id:5000+i,status:'pending'}));
     let remote=structuredClone(fixture);
     const requests=[];
