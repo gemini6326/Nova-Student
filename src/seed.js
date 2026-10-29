@@ -1,5 +1,6 @@
 import { db, migrate, save, flushSave, id } from './db.js';
 import { OFFERS, SOURCES } from './data/seed.js';
+import { STUDENTOFFERS_PICKS } from './data/studentoffers-picks.js';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,7 +8,7 @@ export function seedDatabase(){
 const now=new Date().toISOString();
 for(const o of OFFERS){
   const existing=db.offers.find(x=>x.slug===o.slug);
-  const row={...o,source_domain:new URL(o.source_url).hostname.replace(/^www\./,''),status:o.status||'active',discovered_at:existing?.discovered_at||now,verified_at:o.status==='pending'?null:o.verified_at||'2026-09-28T00:00:00.000Z',updated_at:now,source_hash:existing?.source_hash||null,source_excerpt:existing?.source_excerpt||null};
+  const row={...o,source_domain:new URL(o.source_url).hostname.replace(/^www\./,''),status:o.status||'active',discovered_at:existing?.discovered_at||now,verified_at:o.status==='pending'?null:(process.env.NOVA_SEED_VERIFIED_NOW==='true'?now:o.verified_at||'2026-09-28T00:00:00.000Z'),updated_at:now,source_hash:existing?.source_hash||null,source_excerpt:existing?.source_excerpt||null};
   if(existing) Object.assign(existing,row); else db.offers.push({id:id('offers'),...row});
 }
 for(const [name,url,category,countries] of SOURCES){
@@ -29,6 +30,18 @@ export function applyCatalogCorrections(){
   }
   if(changed)save();
   return changed;
+}
+
+// Insert offers added to the curated list after the first seed (StudentOffers review, 29-10-2026). Runs once per offer.
+export function insertNewCuratedOffers(){
+  let added=0;const now=new Date().toISOString();
+  for(const o of STUDENTOFFERS_PICKS){
+    if(db.offers.some(x=>x.slug===o.slug))continue;
+    db.offers.push({id:id('offers'),...o,source_domain:new URL(o.source_url).hostname.replace(/^www\./,''),status:o.status||'active',discovered_at:now,verified_at:process.env.NOVA_SEED_VERIFIED_NOW==='true'?now:o.verified_at,updated_at:now,source_hash:null,source_excerpt:null});
+    added++;
+  }
+  if(added)save();
+  return added;
 }
 
 if(process.argv[1] && path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){

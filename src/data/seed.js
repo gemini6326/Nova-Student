@@ -717,3 +717,7 @@ export const SOURCES = [
   ['Student Beans','https://www.studentbeans.com','Aggregator',['REGIONAL']],
   ['GitHub Education Partners','https://education.github.com/pack/partners','Aggregator',['GLOBAL']],
 ];
+
+// Ofertas añadidas el 29-10-2026 a partir de la revisión de StudentOffers.co (ver studentoffers-picks.js).
+import {STUDENTOFFERS_PICKS} from './studentoffers-picks.js';
+OFFERS.push(...STUDENTOFFERS_PICKS.filter(p => !OFFERS.some(o => o.slug === p.slug)));

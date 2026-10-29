@@ -12,6 +12,9 @@ test('browser: search, open offer, persist an alert and browse the server catalo
   const root=fileURLToPath(new URL('../../',import.meta.url));const dir=mkdtempSync(path.join(tmpdir(),'nova-e2e-'));
   const state=JSON.parse(readFileSync(path.join(root,'test/fixtures/legacy-state.json'),'utf8'));
   state.alerts=[];state.offers.forEach(offer=>offer.verified_at=new Date().toISOString());
+  // Keep the fixture catalog in focus: curated picks exist but stay unpublished here.
+  const {STUDENTOFFERS_PICKS}=await import(new URL('../../src/data/studentoffers-picks.js',import.meta.url));
+  STUDENTOFFERS_PICKS.forEach((p,i)=>state.offers.push({...p,id:5000+i,status:'pending'}));
   const database=path.join(dir,'test.json');writeFileSync(database,JSON.stringify(state));
   const listener=createServer();await new Promise(resolve=>listener.listen(0,'127.0.0.1',resolve));const port=listener.address().port;await new Promise(resolve=>listener.close(resolve));
   const child=spawn(process.execPath,['server.js'],{cwd:root,env:{...process.env,PORT:String(port),DATABASE_PATH:database,SUPABASE_URL:'',SUPABASE_SECRET_KEY:'',SEED_DATABASE_PATH:'',WORKER_ENABLED:'false',GROQ_API_KEY:'',BRAVE_SEARCH_API_KEY:'',RESEND_API_KEY:'',SMTP_USER:'',SMTP_PASS:'',ADMIN_TOKEN:''},stdio:['ignore','pipe','pipe']});
