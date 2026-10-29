@@ -651,3 +651,22 @@ body.dark,html.pre-dark body{--ember:#6366F1;--ember-2:#7C83F6;--ember-ink:#FFFF
 .source-cta,.nova-ai-fab{background:var(--ember);color:var(--ember-ink);box-shadow:0 10px 24px -12px var(--ember)}
 .source-cta:hover,.nova-ai-fab:hover{background:var(--ember-2)}
 .offer-detail-header{background:linear-gradient(180deg,var(--ember-soft),transparent 85%)}
+
+/* ===== Joyas ocultas y valor ===== */
+:root{--gold:#B7791F;--gold-soft:rgba(183,121,31,.10);--gold-line:rgba(183,121,31,.35)}
+body.dark,html.pre-dark body{--gold:#F2C46D;--gold-soft:rgba(242,196,109,.10);--gold-line:rgba(242,196,109,.30)}
+.hero-value{margin:-4px 0 14px;font:600 15px var(--f-body);color:var(--gold)}
+.hero-value::before{content:"◆ ";font-size:12px;vertical-align:1px}
+.gems-sub{margin-top:6px;color:var(--muted)}
+.gems-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.gem-card{display:grid;gap:10px;align-content:start;text-align:left;padding:18px;border-radius:18px;border:1px solid var(--gold-line);background:linear-gradient(160deg,var(--gold-soft),transparent 60%),var(--card);color:var(--ink);box-shadow:var(--shadow-1);transition:transform .18s ease,box-shadow .18s ease}
+.gem-card:hover,.gem-card:focus-visible{transform:translateY(-3px);box-shadow:0 18px 40px -24px rgba(0,0,0,.5)}
+.gem-top{display:flex;align-items:center;gap:10px}
+.gem-top .lg{--s:38px}
+.gem-brand{font:700 16px var(--f-display);letter-spacing:-.02em}
+.gem-value{margin-left:auto;padding:4px 10px;border-radius:999px;background:var(--gold-soft);border:1px solid var(--gold-line);color:var(--gold);font:700 12.5px var(--f-body);white-space:nowrap}
+.gem-benefit{font-weight:600;font-size:15px;line-height:1.45}
+.gem-why{font-size:14px;color:var(--muted);line-height:1.5}
+.oc-tag.oc-value{background:var(--gold-soft);color:var(--gold);border-color:var(--gold-line);font-weight:700}
+@media (max-width:640px){.gems-grid{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}.gem-card{scroll-snap-align:start}}
+@media (prefers-reduced-motion:reduce){.gem-card,.gem-card:hover{transition:none;transform:none}}

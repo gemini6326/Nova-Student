@@ -3,6 +3,7 @@ import {highlights} from './search/highlights.js';
 import {genericSummary} from './search/engine.js';
 import {logoDomain} from './search/logos.js';
 import {playbookFor} from './benefits/playbook.js';
+import {valueOf,usd,totalValue,gemsIn} from './benefits/value.js';
 /**
  * Nova Student Radar — Frontend App
  * Rewritten for full functionality & premium UX
@@ -126,6 +127,33 @@ async function loadMeta() {
   }
 }
 
+// Joyas ocultas y valor total: se calculan sobre el catálogo publicado completo.
+async function loadGems() {
+  try {
+    const { offers: all } = await apiFetch('/api/offers');
+    const total = totalValue(all);
+    if (total > 0) {
+      const hv = $('#heroValue');
+      if (hv) { hv.textContent = `Más de ${usd(total)} en beneficios comprobados te esperan aquí.`; hv.hidden = false; }
+    }
+    const gems = gemsIn(all).slice(0, 12);
+    const grid = $('#gemsGrid');
+    if (!grid || gems.length < 3) return;
+    grid.innerHTML = gems.map(({ offer: o, why }) => {
+      const v = valueOf(o);
+      return `<button type="button" class="gem-card" role="listitem" data-gem="${o.id}" aria-label="${esc(o.brand)}: ${esc(why)}">
+        <span class="gem-top"><span class="brandmark">${logoTile(o)}</span><span class="gem-brand">${esc(o.brand)}</span>${v ? `<span class="gem-value">${esc(v.label)}</span>` : '<span class="gem-value gem-free">Gratis</span>'}</span>
+        <span class="gem-benefit">${esc(o.benefit)}</span>
+        <span class="gem-why">${esc(why)}</span>
+      </button>`;
+    }).join('');
+    grid.querySelectorAll('[data-gem]').forEach(b => b.addEventListener('click', () => openOffer(Number(b.dataset.gem))));
+    $('#gemsSection').hidden = false;
+  } catch (e) {
+    console.error('loadGems error:', e);
+  }
+}
+
 async function loadStats() {
   try {
     const s = await apiFetch('/api/stats');
@@ -220,6 +248,7 @@ function renderCard(o) {
             ${top ? `<span class="oc-tag hot hl-${esc(top.key)}" title="${esc(top.reason)}">${esc(top.label)}</span>` : ''}
             <span class="oc-tag">${esc(SHORT_CAT[o.category] || catLabel(o.category))}</span>
             <span class="oc-tag t-${esc(o.offer_type || 'other')}">${badgeLabel(o.offer_type)}</span>
+            ${valueOf(o) ? `<span class="oc-tag oc-value" title="Valor declarado por la oferta">${esc(valueOf(o).label)}</span>` : ''}
           </div>
         </div>
         <button class="save-btn ${isSaved ? 'saved' : ''}" data-save="${o.id}" aria-label="${isSaved ? 'Quitar de guardadas' : 'Guardar oferta'}" title="${isSaved ? 'Quitar de guardadas' : 'Guardar'}">${isSaved ? '♥' : '♡'}</button>
@@ -1005,6 +1034,7 @@ async function init() {
     loadSaved(),
     loadCategories(),
     loadTrending(),
+    loadGems(),
   ]);
 
   // The public catalog renders before optional account synchronization.
