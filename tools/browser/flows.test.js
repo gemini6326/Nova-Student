@@ -24,7 +24,7 @@ test('browser: search, open offer, persist an alert and browse the server catalo
     browser=await chromium.launch();const context=await browser.newContext();
     await context.route('**/*',route=>new URL(route.request().url()).origin===base?route.continue():route.abort());
     const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto(base);
-    await page.locator('#nav-discover').click();await page.locator('#q').fill('cloud');await page.locator('#searchBtn').click();
+    await page.locator('#nav-discover').click();await page.locator('#q').fill('Educación cloud');await page.locator('#searchBtn').click();
     await page.locator('#grid .card').first().waitFor();assert.match(await page.locator('#grid').innerText(),/Educación cloud/);
     await page.locator('#grid .card').first().click();await page.locator('#modalTitle').waitFor();assert.match(await page.locator('#modalTitle').innerText(),/Educación cloud/);
     // The premium panel covers the backdrop's center; close with the visible button.
@@ -34,7 +34,7 @@ test('browser: search, open offer, persist an alert and browse the server catalo
     await page.waitForFunction(()=>/guardada|creada|activada/i.test(document.querySelector('#alertStatus')?.textContent||''));
     await page.goto(base+'/catalogo/');
     await page.waitForFunction(()=>document.querySelectorAll('#country option').length===250);
-    await page.fill('#busqueda','cloud');
+    await page.fill('#busqueda','Educación cloud');
     await page.locator('[data-offer]:visible h2 a').first().click();
     await page.locator('h1').waitFor();assert.match(await page.locator('h1').textContent(),/Educación cloud/);
     assert.equal(errors.length,0);

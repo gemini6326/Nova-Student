@@ -9,6 +9,9 @@ test('HTTP API boots from normalized RPCs, preserves public gating and saves ale
     import {createServer} from 'node:net';
     const fixture=JSON.parse(readFileSync('test/fixtures/legacy-state.json','utf8'));
     for(const offer of fixture.offers)offer.verified_at=new Date().toISOString();
+    // The remote catalog already holds the curated picks, so boot has nothing to insert.
+    const {STUDENTOFFERS_PICKS}=await import('./src/data/studentoffers-picks.js');
+    STUDENTOFFERS_PICKS.forEach((p,i)=>fixture.offers.push({...p,id:5000+i,status:'pending'}));
     let remote=structuredClone(fixture);
     const requests=[];
     const nativeFetch=globalThis.fetch;
