@@ -47,15 +47,15 @@ jobs:
           PRIVACY_CONTACT_EMAIL: ${{ vars.PRIVACY_CONTACT_EMAIL }}
           LIVENESS_MAX_AGE_DAYS: ${{ vars.LIVENESS_MAX_AGE_DAYS || '14' }}
           BRAVE_MONTHLY_LIMIT: ${{ vars.BRAVE_MONTHLY_LIMIT || '600' }}
-          SCAN_BATCH_SIZE: '60'
-          LIVENESS_AI_CALLS_PER_CYCLE: '12'
+          SCAN_BATCH_SIZE: '100'
+          LIVENESS_AI_CALLS_PER_CYCLE: '25'
           RADAR_ENGINE: actions
           WORKER_ENABLED: 'false'
         run: node tools/browser/radar.js
       - name: Build public static catalog
         if: vars.STATIC_PAGES_ENABLED == 'true'
         env:
-          STATIC_BASE_URL: https://halleydavid157004.github.io/nova-student/
+          STATIC_BASE_URL: https://gemini6326.github.io/nova-student/
         run: node tools/static/build.js
       - name: Audit public HTML before publishing
         if: vars.STATIC_PAGES_ENABLED == 'true'
@@ -96,7 +96,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, time, urllib.request, urllib.error
-          base = 'https://nova-student-radar.onrender.com'
+          base = 'https://nova-student-radar-l6kk.onrender.com'
           deadline = time.monotonic() + 180
           def read(path):
               req = urllib.request.Request(base + path, headers={'User-Agent': 'NovaStudentScheduledRadar/1.0'})

@@ -7,7 +7,7 @@ export async function initBenefits(doc,{fetcher=fetch,loadProfile=savedProfile,n
  const status=message=>{$('benefits-status').textContent=message;},node=(tag,text)=>{const n=doc.createElement(tag);if(text!==undefined)n.textContent=String(text);return n;};
  const profile=()=>({country:$('benefits-country').value,email_type:$('benefits-email').value,career:$('benefits-career').value.slice(0,80),student:$('benefits-student').value==='yes'?true:$('benefits-student').value==='no'?false:null});
  const catalogURL=new URL(root.dataset.catalog,doc.location.href);if(catalogURL.origin!==doc.location.origin)throw new Error('Origen de catálogo inválido.');
- const reportURL=new URL(root.dataset.reportOrigin||doc.location.origin,doc.location.href);if(![doc.location.origin,'https://nova-student-radar.onrender.com'].includes(reportURL.origin))throw new Error('Origen de reportes inválido.');
+ const reportURL=new URL(root.dataset.reportOrigin||doc.location.origin,doc.location.href);if(![doc.location.origin,'https://nova-student-radar-l6kk.onrender.com'].includes(reportURL.origin))throw new Error('Origen de reportes inválido.');
  const names=new Map(countryOptions().map(c=>[c.code,c.name]));for(const [code,name] of names){const option=node('option',name);option.value=code;$('benefits-country').append(option);}
  if(root.dataset.mode==='static')$('benefits-account').hidden=true;
  $('benefits-timezone').textContent='Fechas mostradas en '+timeZone+'. La fecha puede ser el plazo para solicitar el beneficio; confirma sus condiciones.';

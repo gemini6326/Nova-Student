@@ -1,6 +1,6 @@
 import crypto from 'node:crypto';
 export const CONSENT_VERSION='2026-10-01';
-export const PUBLIC_ORIGIN='https://nova-student-radar.onrender.com';
+export const PUBLIC_ORIGIN='https://nova-student-radar-l6kk.onrender.com';
 export function privacyConfig(env=process.env){
  const controller=String(env.PRIVACY_CONTROLLER||'').trim(),contact=String(env.PRIVACY_CONTACT_EMAIL||'').trim();
  const ready=controller.length>=2&&controller.length<=120&&!/[<>\r\n]/.test(controller)&&contact.length<=254&&/^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(contact);

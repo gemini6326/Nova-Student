@@ -2,6 +2,7 @@ import {effectiveOfferType,verificationInfo} from './search/quality.js';
 import {highlights} from './search/highlights.js';
 import {genericSummary} from './search/engine.js';
 import {logoDomain} from './search/logos.js';
+import {playbookFor} from './benefits/playbook.js';
 /**
  * Nova Student Radar — Frontend App
  * Rewritten for full functionality & premium UX
@@ -132,6 +133,8 @@ async function loadStats() {
     animateNumber('#sSources', s.sources);
     animateNumber('#sFresh', s.fresh);
     animateNumber('#sEvents', s.events);
+    // Un contador en cero transmite abandono: se oculta hasta que haya datos.
+    [['#stat-offers', s.total], ['#stat-fresh', s.fresh], ['#stat-events', s.events]].forEach(([sel, v]) => $(sel)?.toggleAttribute('hidden', !v));
   } catch (e) {
     console.error('loadStats error:', e);
   }
@@ -429,6 +432,22 @@ function triggerSearch() {
 /* ============================================
    MODAL: DETALLE DE OFERTA
    ============================================ */
+function playbookSection(o) {
+  const pb = playbookFor(o);
+  const combos = pb.combos.map(slug => offers.find(x => x.slug === slug)).filter(Boolean);
+  return `
+          <div class="offer-section playbook">
+            <h3>Cómo aprovecharla</h3>
+            <div class="pb-stats">
+              <div class="pb-stat"><span class="pb-k">Tiempo</span><span class="pb-v">${esc(pb.time)}</span></div>
+              <div class="pb-stat"><span class="pb-k">Esfuerzo</span><span class="pb-v">${esc(pb.effort)}</span></div>
+              <div class="pb-stat"><span class="pb-k">Impacto</span><span class="pb-v">${esc(pb.impact)}</span></div>
+            </div>
+            ${pb.tips.length ? `<ul class="pb-tips">${pb.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+            ${combos.length ? `<div class="pb-combos"><span class="pb-k">Combínala con</span><div class="pb-combo-list">${combos.map(c => `<button type="button" class="pb-combo" data-open-offer="${c.id}">${esc(c.brand)}</button>`).join('')}</div></div>` : ''}
+          </div>`;
+}
+
 async function openOffer(id) {
   const modal = $('#modal');
   const content = $('#modalContent');
@@ -476,6 +495,7 @@ async function openOffer(id) {
             <h3>Cómo obtenerla</h3>
             <ol class="steps-list">${o.steps.map(st => `<li>${esc(st)}</li>`).join('')}</ol>
           </div>` : ''}
+          ${playbookSection(o)}
           <div class="offer-section"><h3>Acceso desde otros países</h3><p>Comprueba residencia, matrícula y método de verificación en los requisitos y la fuente. Una VPN no sustituye esos requisitos; utiliza solo métodos expresamente permitidos por el proveedor.</p></div>
           ${o.liveness_verified_at && evidence ? `<div class="offer-section" id="offerEvidence"><h3>Evidencia de la última verificación</h3><blockquote>${esc(evidence)}</blockquote></div>` : ''}
         </div>
@@ -495,6 +515,7 @@ async function openOffer(id) {
         </aside>
       </div>`;
     bindCards(content);
+    content.querySelectorAll('[data-open-offer]').forEach(b => b.addEventListener('click', () => openOffer(Number(b.dataset.openOffer))));
     content.querySelector('[data-share]')?.addEventListener('click', async () => {
       const link = `${location.origin}/?offer=${o.id}`;
       try { await navigator.clipboard.writeText(link); toast('Enlace copiado', 'success'); } catch { toast(link); }

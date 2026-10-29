@@ -9,7 +9,7 @@ async function call(action,{method='POST',input={},query='',form}={}){
  const calls=[],headers={};let result;
  const req={method,headers:{'content-type':form?'application/x-www-form-urlencoded':'application/json'},async *[Symbol.asyncIterator](){yield Buffer.from(form||'');}};
  const res={setHeader(k,v){headers[k]=v;}};
- const handled=await handleSubscriptions(req,res,new URL('https://nova-student-radar.onrender.com/api/subscriptions/'+action+query),{json:(_,status,data)=>{result={status,data};},body:async()=>input,rpc:async(op,data)=>{calls.push({op,data});return {ok:true};},erase:async data=>{calls.push({op:'erase',data});return {ok:true};}});
+ const handled=await handleSubscriptions(req,res,new URL('https://nova-student-radar-l6kk.onrender.com/api/subscriptions/'+action+query),{json:(_,status,data)=>{result={status,data};},body:async()=>input,rpc:async(op,data)=>{calls.push({op,data});return {ok:true};},erase:async data=>{calls.push({op:'erase',data});return {ok:true};}});
  return {handled,calls,headers,...result};
 }
 test('GET and malformed tokens never mutate subscription rows',async()=>{

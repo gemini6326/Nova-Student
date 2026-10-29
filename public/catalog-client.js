@@ -19,7 +19,7 @@ export async function initStaticSearch(doc,catalog){
   const empty=doc.getElementById('vacio');if(empty)empty.hidden=found.length>0;
   const status=doc.getElementById('vigencia');if(status&&items[0]?.hidden)status.textContent='Esta ficha requiere una nueva verificación. Consulta la fuente para conocer su estado actual.';
   const hints=doc.getElementById('sugerencias');if(hints){hints.replaceChildren();if(!found.length)for(const term of index.suggestions(filters.q)){const button=doc.createElement('button');button.textContent='Buscar '+term;button.addEventListener('click',()=>{search.value=term;update();});hints.append(button);}}
-  clearTimeout(timer);if(search&&!found.length&&filters.q){const topics=gapTopics(filters.q),key=topics.join(',');if(topics.length&&key!==lastTopics)timer=setTimeout(()=>{lastTopics=key;fetch('https://nova-student-radar.onrender.com/api/search-gap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topics}),credentials:'omit'}).catch(()=>{});},1500);}
+  clearTimeout(timer);if(search&&!found.length&&filters.q){const topics=gapTopics(filters.q),key=topics.join(',');if(topics.length&&key!==lastTopics)timer=setTimeout(()=>{lastTopics=key;fetch('https://nova-student-radar-l6kk.onrender.com/api/search-gap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topics}),credentials:'omit'}).catch(()=>{});},1500);}
  }
  search?.addEventListener('input',update);
  for(const id of ['country','category','verification','email','week','cross'])doc.getElementById(id)?.addEventListener('change',update);

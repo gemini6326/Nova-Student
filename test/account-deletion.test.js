@@ -8,7 +8,7 @@ const user={id:uid,is_anonymous:false,email:'owner@example.invalid',email_confir
 async function call({method='POST',headers={},input={confirm:'ELIMINAR'},overrides={},userData=user,deleteStatus=200,proofStatus=404,proofCode='user_not_found',rpcFailure,logoutFailure=false}={}){
  const calls=[],network=[];let result;
  const req={method,headers:{authorization:'Bearer '+jwt,'content-type':'application/json',...headers}},res={setHeader(){}};
- const handled=await handleAccountDeletion(req,res,new URL('https://nova-student-radar.onrender.com/api/account/delete'),{env:{...env,...overrides},body:async()=>input,json:(_,status,data)=>result={status,data},rpc:async(op,data)=>{calls.push({op,data});if(op===rpcFailure)throw new Error('private storage failure');if(op==='begin')return {hash};if(op==='claim')return {user_id:uid};return {ok:true};},fetcher:async(url,options)=>{
+ const handled=await handleAccountDeletion(req,res,new URL('https://nova-student-radar-l6kk.onrender.com/api/account/delete'),{env:{...env,...overrides},body:async()=>input,json:(_,status,data)=>result={status,data},rpc:async(op,data)=>{calls.push({op,data});if(op===rpcFailure)throw new Error('private storage failure');if(op==='begin')return {hash};if(op==='claim')return {user_id:uid};return {ok:true};},fetcher:async(url,options)=>{
   network.push({url,options});if(url.endsWith('/user'))return Response.json(userData);
   if(url.includes('/logout')){if(logoutFailure)throw new Error('private provider error');return new Response(null,{status:204});}
   if(options.method==='DELETE')return Response.json({}, {status:deleteStatus});

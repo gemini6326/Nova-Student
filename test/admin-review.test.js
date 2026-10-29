@@ -11,7 +11,7 @@ const item={offer:{id:101,title:'Education',brand:'Fixture',source_url:'https://
 const user={id:uid,is_anonymous:false,email_confirmed_at:new Date(now).toISOString(),app_metadata:{nova_role:'admin'}};
 async function call({method='GET',path='/api/admin/review',headers={},input={},userData=user,http=200,rpcFailure=false,context=item}={}){
  let result;const calls=[],network=[];
- const handled=await handleAdminReview({method,headers:{authorization:'Bearer '+token,'content-type':'application/json',...headers}},{setHeader(){}},new URL('https://nova-student-radar.onrender.com'+path),{env,body:async()=>input,json:(_,status,data)=>result={status,data},fetcher:async(url,options)=>{network.push({url,options});return Response.json(userData,{status:http});},rpc:async(op,data)=>{calls.push({op,data});if(rpcFailure)throw new Error('private email secret');if(op==='context')return {...context,published:[]};return op==='queue'?{items:[structuredClone(item)],published:[]}:{ok:true};}});
+ const handled=await handleAdminReview({method,headers:{authorization:'Bearer '+token,'content-type':'application/json',...headers}},{setHeader(){}},new URL('https://nova-student-radar-l6kk.onrender.com'+path),{env,body:async()=>input,json:(_,status,data)=>result={status,data},fetcher:async(url,options)=>{network.push({url,options});return Response.json(userData,{status:http});},rpc:async(op,data)=>{calls.push({op,data});if(rpcFailure)throw new Error('private email secret');if(op==='context')return {...context,published:[]};return op==='queue'?{items:[structuredClone(item)],published:[]}:{ok:true};}});
  return {handled,calls,network,...result};
 }
 test('approval demands recent attested evidence, never just HTTP 200 or official flag',()=>{

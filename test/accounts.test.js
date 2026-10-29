@@ -18,9 +18,9 @@ test('PKCE works across tabs in same browser, clears verifier and never persists
  const browser=memory(),tab=memory(),other=memory(),calls=[];
  const fetcher=async(url,options)=>{calls.push({url,options});if(url.includes('/otp?'))return Response.json({});if(url.includes('/token?'))return Response.json(session());if(url.endsWith('/user'))return Response.json({id:uid,is_anonymous:false});if(url.includes('/logout'))return new Response(null,{status:204});throw new Error(url);};
  const client=await createAccountClient(config,{storage:tab,verifierStorage:browser,cryptoApi:webcrypto,fetcher});
- await client.signIn('fixture@example.invalid','https://nova-student-radar.onrender.com/account.html');
+ await client.signIn('fixture@example.invalid','https://nova-student-radar-l6kk.onrender.com/account.html');
  const request=JSON.parse(calls[0].options.body);assert.equal(request.code_challenge_method,'s256');assert.equal(request.code_challenge.length,43);assert.ok(!calls[0].options.body.includes('code_verifier'));
- await assert.rejects(client.signIn('fixture@example.invalid','https://nova-student-radar.onrender.com/account.html'),/un minuto/);
+ await assert.rejects(client.signIn('fixture@example.invalid','https://nova-student-radar-l6kk.onrender.com/account.html'),/un minuto/);
  const callback=await createAccountClient(config,{storage:other,verifierStorage:browser,cryptoApi:webcrypto,fetcher});await callback.callback('fixture-code');
  assert.equal((await callback.current()).user.id,uid);assert.equal(browser.getItem(slot+':verifier'),null);assert.equal(tab.getItem(slot),null);assert.ok(other.getItem(slot));assert.ok(![...browser.map.values()].join('').includes('fixture-access'));
  assert.equal(calls[1].options.credentials,'omit');assert.ok(calls[1].options.headers.apikey.startsWith('sb_publishable_'));
@@ -72,10 +72,10 @@ test('GitHub OAuth is opt-in, reuses PKCE and lands on the same callback',async(
  const browser=memory(),tab=memory();
  const fetcher=async url=>{if(url.includes('/token?grant_type=pkce'))return Response.json(session());if(url.endsWith('/user'))return Response.json({id:uid,is_anonymous:false});throw new Error(url);};
  const disabled=await createAccountClient(config,{storage:tab,verifierStorage:browser,cryptoApi:webcrypto,fetcher});
- await assert.rejects(disabled.oauthUrl('github','https://nova-student-radar.onrender.com/account.html'),/no está activado/);
+ await assert.rejects(disabled.oauthUrl('github','https://nova-student-radar-l6kk.onrender.com/account.html'),/no está activado/);
  const client=await createAccountClient({...config,providers:['github']},{storage:tab,verifierStorage:browser,cryptoApi:webcrypto,fetcher});
  await assert.rejects(client.oauthUrl('github','http://external.invalid/account.html'),/Destino inválido/);
- const url=new URL(await client.oauthUrl('github','https://nova-student-radar.onrender.com/account.html'));
+ const url=new URL(await client.oauthUrl('github','https://nova-student-radar-l6kk.onrender.com/account.html'));
  assert.equal(url.origin+url.pathname,'https://fixture.supabase.co/auth/v1/authorize');
  assert.equal(url.searchParams.get('provider'),'github');assert.equal(url.searchParams.get('code_challenge_method'),'s256');assert.equal(url.searchParams.get('code_challenge').length,43);
  assert.ok(!url.href.includes('verifier'));

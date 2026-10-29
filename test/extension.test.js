@@ -11,7 +11,7 @@ test('extension production settings have one source and generated files stay con
  assert.throws(()=>extensionFiles({apiOrigin:'http://localhost:4310'}),/origin/);
 });
 test('extension popup renders untrusted offers as text and links only to the catalog',async()=>{
- const dom=new JSDOM(readFileSync('extension/popup.html','utf8'));const config={apiOrigin:'https://nova-student-radar.onrender.com'};
+ const dom=new JSDOM(readFileSync('extension/popup.html','utf8'));const config={apiOrigin:'https://nova-student-radar-l6kk.onrender.com'};
  const chrome={tabs:{query:(_input,cb)=>cb([{url:'https://example.invalid/private?token=secret'}])},runtime:{sendMessage:async request=>{assert.deepEqual(Object.keys(request).sort(),['domain','type']);return {offers:[{id:12,title:'<img src=x onerror=alert(1)>',benefit:'<script>bad()</script>',source_url:'javascript:alert(1)'}]};}},storage:{local:{get:(_defaults,cb)=>cb({radarNotice:false}),set:()=>{}}}};
  runInNewContext(readFileSync('extension/popup.js','utf8'),{chrome,document:dom.window.document,NOVA_CONFIG:config,URL});await new Promise(r=>setTimeout(r,10));
  assert.equal(dom.window.document.querySelectorAll('#results img,#results script').length,0);assert.equal(dom.window.document.querySelector('#results a').href,config.apiOrigin+'/?offer=12');assert.equal(dom.window.document.querySelector('#notice').checked,false);
