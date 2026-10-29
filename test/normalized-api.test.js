@@ -12,7 +12,8 @@ test('HTTP API boots from normalized RPCs, preserves public gating and saves ale
     // The remote catalog already holds the curated picks, so boot has nothing to insert.
     const {STUDENTOFFERS_PICKS}=await import('./src/data/studentoffers-picks.js');
     const {REGIONAL_PICKS}=await import('./src/data/regional-picks.js');
-    [...STUDENTOFFERS_PICKS,...REGIONAL_PICKS].forEach((p,i)=>fixture.offers.push({...p,id:5000+i,status:'pending'}));
+    const {AI_NEW}=await import('./src/data/ai-updates.js');
+    [...STUDENTOFFERS_PICKS,...REGIONAL_PICKS,...AI_NEW].forEach((p,i)=>fixture.offers.push({...p,id:5000+i,status:'pending'}));
     let remote=structuredClone(fixture);
     const requests=[];
     const nativeFetch=globalThis.fetch;

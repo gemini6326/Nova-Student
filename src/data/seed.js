@@ -723,3 +723,6 @@ import {STUDENTOFFERS_PICKS} from './studentoffers-picks.js';
 OFFERS.push(...STUDENTOFFERS_PICKS.filter(p => !OFFERS.some(o => o.slug === p.slug)));
 import {REGIONAL_PICKS} from './regional-picks.js';
 OFFERS.push(...REGIONAL_PICKS.filter(p => !OFFERS.some(o => o.slug === p.slug)));
+import {AI_NEW, applyAiPatches} from './ai-updates.js';
+applyAiPatches(OFFERS);
+OFFERS.push(...AI_NEW.filter(p => !OFFERS.some(o => o.slug === p.slug)));

@@ -15,7 +15,8 @@ test('browser: search, open offer, persist an alert and browse the server catalo
   // Keep the fixture catalog in focus: curated picks exist but stay unpublished here.
   const {STUDENTOFFERS_PICKS}=await import(new URL('../../src/data/studentoffers-picks.js',import.meta.url));
   const {REGIONAL_PICKS}=await import(new URL('../../src/data/regional-picks.js',import.meta.url));
-  [...STUDENTOFFERS_PICKS,...REGIONAL_PICKS].forEach((p,i)=>state.offers.push({...p,id:5000+i,status:'pending'}));
+  const {AI_NEW}=await import(new URL('../../src/data/ai-updates.js',import.meta.url));
+  [...STUDENTOFFERS_PICKS,...REGIONAL_PICKS,...AI_NEW].forEach((p,i)=>state.offers.push({...p,id:5000+i,status:'pending'}));
   const database=path.join(dir,'test.json');writeFileSync(database,JSON.stringify(state));
   const listener=createServer();await new Promise(resolve=>listener.listen(0,'127.0.0.1',resolve));const port=listener.address().port;await new Promise(resolve=>listener.close(resolve));
   const child=spawn(process.execPath,['server.js'],{cwd:root,env:{...process.env,PORT:String(port),DATABASE_PATH:database,SUPABASE_URL:'',SUPABASE_SECRET_KEY:'',SEED_DATABASE_PATH:'',WORKER_ENABLED:'false',GROQ_API_KEY:'',BRAVE_SEARCH_API_KEY:'',RESEND_API_KEY:'',SMTP_USER:'',SMTP_PASS:'',ADMIN_TOKEN:''},stdio:['ignore','pipe','pipe']});

@@ -25,7 +25,8 @@ test('existing databases receive new picks once and keep their rows', () => {
     const {STUDENTOFFERS_PICKS}=await import('./src/data/studentoffers-picks.js');
     db.offers=[{id:42,slug:STUDENTOFFERS_PICKS[0].slug,benefit:'kept',status:'active'}];
     const {REGIONAL_PICKS}=await import('./src/data/regional-picks.js');
-    assert.equal(insertNewCuratedOffers(),STUDENTOFFERS_PICKS.length+REGIONAL_PICKS.length-1);
+    const {AI_NEW}=await import('./src/data/ai-updates.js');
+    assert.equal(insertNewCuratedOffers(),STUDENTOFFERS_PICKS.length+REGIONAL_PICKS.length+AI_NEW.length-1);
     assert.equal(db.offers[0].benefit,'kept');
     assert.equal(insertNewCuratedOffers(),0);
   `;
