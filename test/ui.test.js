@@ -3,6 +3,7 @@ import {highlights} from '../public/search/highlights.js';
 import {genericSummary} from '../public/search/engine.js';
 import {logoDomain} from '../public/search/logos.js';
 import {playbookFor} from '../public/benefits/playbook.js';
+import {valueOf,usd,totalValue,gemsIn} from '../public/benefits/value.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -41,7 +42,7 @@ test('interfaz: filtros, detalle, favoritos, radar, alerta e IA',async()=>{
   };
   const $=sel=>window.document.querySelector(sel);
   try {
-    Object.assign(window,{highlights,genericSummary,logoDomain,effectiveOfferType,verificationInfo,playbookFor});
+    Object.assign(window,{highlights,genericSummary,logoDomain,effectiveOfferType,verificationInfo,playbookFor,valueOf,usd,totalValue,gemsIn});
     window.eval(app.replace(/^import .*;\n/gm,''));
     await sleep(120);
     assert.equal(window.document.querySelectorAll('#grid .card').length,48,'first page renders 48 cards');

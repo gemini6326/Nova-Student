@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css?v=24">
+  <link rel="stylesheet" href="/styles.css?v=25">
   <script src="/theme-init.js?v=1"></script>
 </head>
 <body>
@@ -56,6 +56,7 @@
           <div class="hero-copy">
             <span class="status-pill"><span class="pulse"></span><span id="heroStatus">Radar activo · fuentes oficiales vigiladas cada 6 horas</span></span>
             <h1 id="hero-heading">Tu correo educativo vale <span class="hl">más de lo que crees.</span></h1>
+            <p class="hero-value" id="heroValue" hidden></p>
             <p class="hero-desc">Software, IA, créditos cloud y descuentos para estudiantes, cada uno con <strong>requisitos, fuente oficial y fecha de comprobación</strong>. Descubre en segundos lo que puedes reclamar desde tu país.</p>
 
             <div class="search-container" role="search">
@@ -96,6 +97,11 @@
       </div>
 
       <div class="marquee" id="marquee" aria-label="Marcas en el radar" hidden><div class="mq-track" id="marqueeTrack"></div></div>
+
+      <section id="gemsSection" class="wrap section gems-section" aria-labelledby="gems-heading" hidden>
+        <div class="section-header"><div><span class="section-label">Poca gente las conoce</span><h2 id="gems-heading">Joyas ocultas</h2><p class="gems-sub" id="gemsSub">Ofertas comprobadas que valen mucho más de lo que parecen.</p></div></div>
+        <div id="gemsGrid" class="gems-grid" role="list" aria-label="Joyas ocultas"></div>
+      </section>
 
       <section id="trendingSection" class="wrap section" aria-label="Beneficios destacados" hidden>
         <div class="section-header"><div><span class="section-label">Comprobadas esta semana</span><h2>Hot e imperdibles</h2></div></div>
@@ -288,7 +294,7 @@
     </form>
   </div>
 
-  <script src="/app.js?v=26" type="module"></script>
+  <script src="/app.js?v=27" type="module"></script>
   <script src="/premium.js?v=21" type="module"></script>
 </body>
 </html>
