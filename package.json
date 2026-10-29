@@ -11,7 +11,7 @@
     "seed": "node src/seed.js",
     "scan": "node src/scan-once.js",
     "migrate:state": "node src/migrate-state.js",
-    "test": "node --test test/*.test.js"
+    "test": "node --test --import ./test/setup-env.mjs test/*.test.js"
   },
   "engines": {
     "node": ">=20"

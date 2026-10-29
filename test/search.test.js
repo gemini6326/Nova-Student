@@ -9,13 +9,13 @@ process.env.SUPABASE_URL = '';
 process.env.SUPABASE_SECRET_KEY = '';
 const {db} = await import('../src/db.js');
 const {searchOffers} = await import('../src/services/search.js');
-const offer = {status: 'active', official: true, countries: ['GLOBAL'], requirements: [], confidence: 90, verified_at: '2026-09-29T12:00:00Z'};
+const offer = {status: 'active', official: true, countries: ['GLOBAL'], requirements: [], confidence: 90, verified_at: new Date(Date.now() - 2 * 86400000).toISOString()};
 db.offers.push(
   {...offer, id: 1, brand: 'Notion', title: 'Plan educativo', summary: 'Educación gratuita', benefit: 'Gratis', category: 'Productivity'},
   {...offer, id: 2, brand: 'Canva', title: 'Diseño para estudiantes', category: 'Design'},
   {...offer, id: 3, brand: 'Copilot', title: 'Asistente para código', category: 'AI'},
   {...offer, id: 4, brand: 'Other', title: 'Paid software', category: 'Development'},
-  {...offer, id: 5, brand: 'Another', title: 'Integración con Notion', category: 'Development', verified_at: '2026-09-30T12:00:00Z'},
+  {...offer, id: 5, brand: 'Another', title: 'Integración con Notion', category: 'Development', verified_at: new Date(Date.now() - 86400000).toISOString()},
   {...offer, id: 6, brand: 'Notion', title: 'Sin verificar', official: false, status: 'pending'},
 );
 after(() => rmSync(dir, {recursive: true, force: true}));

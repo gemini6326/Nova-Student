@@ -7,7 +7,7 @@ export function seedDatabase(){
 const now=new Date().toISOString();
 for(const o of OFFERS){
   const existing=db.offers.find(x=>x.slug===o.slug);
-  const row={...o,source_domain:new URL(o.source_url).hostname.replace(/^www\./,''),status:o.status||'active',discovered_at:existing?.discovered_at||now,verified_at:o.status==='pending'?null:o.verified_at||'2026-09-28T00:00:00.000Z',updated_at:now,source_hash:existing?.source_hash||null,source_excerpt:existing?.source_excerpt||null};
+  const row={...o,source_domain:new URL(o.source_url).hostname.replace(/^www\./,''),status:o.status||'active',discovered_at:existing?.discovered_at||now,verified_at:o.status==='pending'?null:(process.env.NOVA_SEED_VERIFIED_NOW==='true'?now:o.verified_at||'2026-09-28T00:00:00.000Z'),updated_at:now,source_hash:existing?.source_hash||null,source_excerpt:existing?.source_excerpt||null};
   if(existing) Object.assign(existing,row); else db.offers.push({id:id('offers'),...row});
 }
 for(const [name,url,category,countries] of SOURCES){
