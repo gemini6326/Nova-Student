@@ -4,7 +4,7 @@ import dns from 'node:dns';
 import {isIP} from 'node:net';
 import {gunzipSync,inflateSync,brotliDecompressSync} from 'node:zlib';
 
-export const SOURCE_UA = 'NovaStudentRadar/2.3 (+https://github.com/halleydavid157004/nova-student)';
+export const SOURCE_UA = 'NovaStudentRadar/2.3 (+https://github.com/gemini6326/nova-student)';
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 export function publicAddress(address) {
   const ip = address.toLowerCase().replace(/^::ffff:/, '');

@@ -8,7 +8,7 @@
     "activeTab"
   ],
   "host_permissions": [
-    "https://nova-student-radar.onrender.com/*"
+    "https://nova-student-radar-l6kk.onrender.com/*"
   ],
   "background": {
     "service_worker": "background.js"

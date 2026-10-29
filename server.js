@@ -59,7 +59,7 @@ if(p==='/api/ai/status')return json(res,200,aiStatus());
 if(((p==='/catalogo'||p.startsWith('/catalogo/'))||p==='/robots.txt'||p==='/sitemap.xml')&&req.method==='GET'){
  await refreshStorage();
  if(p==='/catalogo'){res.writeHead(308,{Location:'/catalogo/'});return res.end();}
- res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://nova-student-radar.onrender.com; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
+ res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://nova-student-radar-l6kk.onrender.com; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'");
  const site=webCatalog(db.offers);
  const key=p==='/robots.txt'||p==='/sitemap.xml'?p.slice(1):p.slice('/catalogo/'.length);
  const file=key.endsWith('/')?key+'index.html':key||'index.html';const content=site.files.get(file);
